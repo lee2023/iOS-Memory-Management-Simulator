@@ -14,9 +14,11 @@
 		B25934E71DE26B4000E7F3AA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B25934E51DE26B4000E7F3AA /* LaunchScreen.storyboard */; };
 		B25934EF1DE272AF00E7F3AA /* MMU.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25934EE1DE272AF00E7F3AA /* MMU.swift */; };
 		B25934F11DE3EC7100E7F3AA /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25934F01DE3EC7100E7F3AA /* Process.swift */; };
-		B25934F31DE3EF7700E7F3AA /* PageTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25934F21DE3EF7700E7F3AA /* PageTable.swift */; };
+		B25934F31DE3EF7700E7F3AA /* HashedPageTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25934F21DE3EF7700E7F3AA /* HashedPageTable.swift */; };
 		B25934F51DE3F23F00E7F3AA /* ProcessQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25934F41DE3F23F00E7F3AA /* ProcessQueue.swift */; };
 		B25934F91DE6C2B200E7F3AA /* HashTableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25934F81DE6C2B200E7F3AA /* HashTableNode.swift */; };
+		B25934FB1DEB6E6500E7F3AA /* CPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25934FA1DEB6E6500E7F3AA /* CPU.swift */; };
+		B25934FD1DEB73BF00E7F3AA /* PhysicalMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25934FC1DEB73BF00E7F3AA /* PhysicalMemory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,9 +31,11 @@
 		B25934E81DE26B4000E7F3AA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B25934EE1DE272AF00E7F3AA /* MMU.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MMU.swift; sourceTree = "<group>"; };
 		B25934F01DE3EC7100E7F3AA /* Process.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Process.swift; sourceTree = "<group>"; };
-		B25934F21DE3EF7700E7F3AA /* PageTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageTable.swift; sourceTree = "<group>"; };
+		B25934F21DE3EF7700E7F3AA /* HashedPageTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashedPageTable.swift; sourceTree = "<group>"; };
 		B25934F41DE3F23F00E7F3AA /* ProcessQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessQueue.swift; sourceTree = "<group>"; };
 		B25934F81DE6C2B200E7F3AA /* HashTableNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashTableNode.swift; sourceTree = "<group>"; };
+		B25934FA1DEB6E6500E7F3AA /* CPU.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPU.swift; sourceTree = "<group>"; };
+		B25934FC1DEB73BF00E7F3AA /* PhysicalMemory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhysicalMemory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,10 +74,12 @@
 				B25934E31DE26B4000E7F3AA /* Assets.xcassets */,
 				B25934E51DE26B4000E7F3AA /* LaunchScreen.storyboard */,
 				B25934E81DE26B4000E7F3AA /* Info.plist */,
-				B25934EE1DE272AF00E7F3AA /* MMU.swift */,
 				B25934F01DE3EC7100E7F3AA /* Process.swift */,
 				B25934F41DE3F23F00E7F3AA /* ProcessQueue.swift */,
-				B25934F21DE3EF7700E7F3AA /* PageTable.swift */,
+				B25934FA1DEB6E6500E7F3AA /* CPU.swift */,
+				B25934EE1DE272AF00E7F3AA /* MMU.swift */,
+				B25934FC1DEB73BF00E7F3AA /* PhysicalMemory.swift */,
+				B25934F21DE3EF7700E7F3AA /* HashedPageTable.swift */,
 				B25934F81DE6C2B200E7F3AA /* HashTableNode.swift */,
 			);
 			path = MemoryManagementSimulator;
@@ -155,9 +161,11 @@
 				B25934F51DE3F23F00E7F3AA /* ProcessQueue.swift in Sources */,
 				B25934EF1DE272AF00E7F3AA /* MMU.swift in Sources */,
 				B25934DD1DE26B4000E7F3AA /* AppDelegate.swift in Sources */,
-				B25934F31DE3EF7700E7F3AA /* PageTable.swift in Sources */,
+				B25934FB1DEB6E6500E7F3AA /* CPU.swift in Sources */,
+				B25934F31DE3EF7700E7F3AA /* HashedPageTable.swift in Sources */,
 				B25934F91DE6C2B200E7F3AA /* HashTableNode.swift in Sources */,
 				B25934F11DE3EC7100E7F3AA /* Process.swift in Sources */,
+				B25934FD1DEB73BF00E7F3AA /* PhysicalMemory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

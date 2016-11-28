@@ -19,10 +19,11 @@ class ProcessQueue {
             queue.append(newProcess)
             head = queue.first
             tail = queue.last
+        } else {
+            //Insert the new process at the end of the queue
+            let lastIndex = size() - 1
+            queue.insert(newProcess, at: lastIndex)
         }
-        //Insert the new process at the end of the queue
-        let lastIndex = size() - 1
-        queue.insert(newProcess, at: lastIndex)
     }
     
     //Method to remove from queue
@@ -44,6 +45,16 @@ class ProcessQueue {
             return queue[-1]
         }
         return queue.first!
+    }
+    
+    //Print the entire queue
+    func printQueue() {
+        if (size() == 0) {
+            return
+        }
+        for process in queue {
+            print("[ \(process.name) ]")
+        }
     }
     
     //Method to check if queue is empty

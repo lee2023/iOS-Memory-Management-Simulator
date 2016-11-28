@@ -9,37 +9,45 @@
 import Foundation
 
 class MMU {
-    
+    let memory = PhysicalMemory()
     let offset = 1
     
-//    func addProcessToTable(_newProcess: Process) {
-//        let table = PageTable()
-//        _newProcess.createVirtualAddress(pageNumber: 2)
-//        table.addProcessAddressToTable(processVirtualAddress: 2)
-//    }
-    
-    func createProcessPageTable(newProcess: Process) -> PageTable {
-        //Create a page table for a process passed into this func
-        let table = PageTable()
-        return table
+    func mapVirtualAddrToPhysicalAddr(process: Process, pageTable: HashedPageTable) {
+        //check to see that the frame was found for the process
+        let pageTableCheck = isFrameInPageTable(process: process, pageTable: pageTable)
+        if (pageTableCheck.0) {
+            //add the frame number and offset together
+            let physicalAddress = pageTableCheck.1 + offset
+            let virtualAddress = pageTableCheck.2
+            memory.insertPageIntoMemTable(frameNumber: physicalAddress, pageNumber: virtualAddress)
+        }
     }
     
-    //Insert code to do the memory virtual address mapping to physical address
-    func mapVirtualAddrToPhysicalAddr(virtualAddress: Int) -> Int {
-        //hash the virtual address's physical address frame number
-        let frameNumber = 0
-        return frameNumber
+    func splitVirtualAddress(process: Process) -> Int {
+        let processVirtualAddress = process.getVirtualAddressWithOffset()
+        let processVirtualAddressNoOffset = processVirtualAddress - offset
+        return processVirtualAddressNoOffset
     }
     
-    func findProcessVirtualAddress() {
+    //If the frame is found, return true, physical address, and split virtual address
+    func isFrameInPageTable(process: Process, pageTable: HashedPageTable) -> (Bool, Int, Int) {
+        let virtualAddress = splitVirtualAddress(process: process)
+        let frameNumber = pageTable.search(pageNumber: virtualAddress).getMappedPageFrameNumber()
+        if (frameNumber != -1) {
+            return (true, frameNumber, virtualAddress)
+        }
         
+        //generate a page fault
+        generatePageFault(process: process, processPageTable: pageTable, memory: self.memory)
+        return (false, -1, -1)
     }
     
-    func findProcessPhysicalAddress() {
-        
+    func generatePageFault(process: Process, processPageTable: HashedPageTable, memory: PhysicalMemory) {
+        let cpu = CPU()
+        cpu.handlePageFault(process: process, processPageTable: processPageTable, memory: memory)
     }
     
     func fifoPageReplacementAlgorithm() {
-        //insert the code to have 
+        //insert the code to do FIFO page replacement
     }
 }

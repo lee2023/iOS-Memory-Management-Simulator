@@ -7,3 +7,65 @@
 //
 
 import Foundation
+import Darwin
+
+class PhysicalMemory {
+    var sizeOfMemory = 0
+    var numberOfMemoryFrames: Int = 0
+    var frameSize: Int = 0
+    var physicalMemoryTable = [Int: Int]()
+    var freeFrameList = [Int]()
+    let defaultInitPageValue = -1
+    
+    func setFrameSize(frameSize: Int) -> Int {
+        self.frameSize = frameSize
+        return self.frameSize
+    }
+    
+    func createPhysicalMemory(memSizeEntered: Int) -> Int {
+        let power = 2.0
+        self.sizeOfMemory = Int(pow(power, Double(memSizeEntered)))
+        return self.sizeOfMemory
+    }
+    
+    func divideMemIntoFrames(physicalMemSize: Int) {
+        if (self.frameSize == 0) {
+            print("The frame size has not been set!")
+        }
+        numberOfMemoryFrames = physicalMemSize/frameSize
+        if (numberOfMemoryFrames % 512 == 0) {
+            print("Memory has been successfully divided into frames of size\(self.frameSize)")
+        }
+    }
+    
+    func createPhysicalMemoryTable(numberOfFrames: Int) -> Dictionary<Int, Int> {
+        for i in 0...numberOfFrames {
+            physicalMemoryTable.updateValue(self.defaultInitPageValue, forKey: i)
+        }
+        return physicalMemoryTable
+    }
+    
+    func insertPageIntoMemTable(frameNumber: Int, pageNumber: Int) {
+        physicalMemoryTable.updateValue(pageNumber, forKey: frameNumber)
+    }
+    
+    func getFreeFrameList() -> [Int] {
+        for (key, value) in physicalMemoryTable {
+            //only add keys for frames that are available
+            if (value == self.defaultInitPageValue){
+                freeFrameList.append(key)
+            }
+        }
+        return freeFrameList
+    }
+    
+    func printPhysicalMemoryTable() {
+        if (physicalMemoryTable.isEmpty) {
+            print("The physical memory table is empty.")
+        }
+        
+        for (key, value) in physicalMemoryTable {
+            print("[ Frame Number: \(key) , Page Number: \(value) ]")
+        }
+    }
+}

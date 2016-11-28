@@ -12,7 +12,7 @@ import Darwin //allows me to use random number generator function
 class Process {
     var name: String = ""
     var pid = Int(arc4random_uniform(100) + 1)
-    var numberOfPages = Int(arc4random_uniform(10) + 1)
+    var numberOfProcessPages: Int?
     var virtualAddress: Int?
     var virtualAddressSpaceSize: Int?
     //randomly chosen offset value
@@ -32,7 +32,7 @@ class Process {
     
     //Check to see if randomly generated number of pages is 0
     func isNumberOfPagesforProcessZero() -> Bool {
-        if (self.numberOfPages == 0) {
+        if (self.numberOfProcessPages! == 0) {
             //each process must have at least 1 page
             return true
         }
@@ -42,11 +42,10 @@ class Process {
     //Number of pages in virtual address space = virtualAddressSpace/pageSize
     func numberOfProcessPages(pageSize: Int) -> Int {
         if (isNumberOfPagesforProcessZero()) {
-            print("Failed to determine the number of pages. Generated pages for the process was \(self.numberOfPages).")
-            return self.numberOfPages
+            print("Failed to determine the number of pages. Generated pages for the process was \(self.numberOfProcessPages).")
+            return self.numberOfProcessPages!
         }
         
-        let numberOfProcessPages: Int?
         //check to see if the virtualAddressSpaceSize variable value has been set
         if (virtualAddressSpaceSize != nil) {
             numberOfProcessPages = Int(virtualAddressSpaceSize!)/pageSize
@@ -67,11 +66,46 @@ class Process {
     }
     
     
-    //Process virtual address: VA = page# + offset
-    func createVirtualAddress(pageNumber: Int) -> Int {
+    //Process virtual address for page: VA = page# + offset
+    func createPageVirtualAddress(pageNumber: Int) -> Int {
         self.virtualAddress = pageNumber + virtualAddressOffset
         print("Process page number is \(pageNumber) and the offset is \(virtualAddressOffset)")
         return self.virtualAddress!
     }
+    
+    //Returns virtual address with the offset
+    func getVirtualAddressWithOffset() -> Int {
+        if (self.virtualAddress != nil) {
+            return self.virtualAddress!
+        }
+        return -1
+    }
+    
+    //Random page access pattern
+    func randomizePageAccess(process: Process) -> Int {
+        var randomPageAccessed = 0
+        if numberOfProcessPages != nil {
+            randomPageAccessed = Int(arc4random_uniform(UInt32(numberOfProcessPages!) + 1))
+            return randomPageAccessed
+        }
+        return -1
+    }
+    
+    //Create a page table
+    func createProcessPageTable(newProcess: Process) -> HashedPageTable {
+        //Create a page table for a process passed into this func
+        let table = HashedPageTable()
+        
+        return table
+    }
 }
+
+
+
+
+
+
+
+
+
 
