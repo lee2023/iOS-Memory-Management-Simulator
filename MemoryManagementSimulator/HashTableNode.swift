@@ -9,9 +9,15 @@
 import Foundation
 
 class HashTableNode {
-    var virtualPageNumber: Int = 0
-    var mappedPageFrameNumber: Int = 0
-    weak var nextNode: HashTableNode? //Create a pointer to a HashTableNode
+    var virtualPageNumber: Int
+    var mappedPageFrameNumber: Int
+    //weak var nextNode: HashTableNode? //Create a pointer to a HashTableNode
+    var nextNode: HashTableNode? //Create a pointer to a HashTableNode
+    
+    init() {
+        virtualPageNumber = 0
+        mappedPageFrameNumber = 0
+    }
     
     func getVirtualPageNumber() -> Int {
         return self.virtualPageNumber

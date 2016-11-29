@@ -10,18 +10,15 @@ import Foundation
 
 class ProcessQueue {
     var queue = [Process]() //empty queue
-    var head: Process?
-    var tail: Process?
+
     
     //Method to add to queue
     func addToQueue (newProcess: Process) {
         if (isEmpty()) {
-            queue.append(newProcess)
-            head = queue.first
-            tail = queue.last
+            queue.insert(newProcess, at: 0)
         } else {
             //Insert the new process at the end of the queue
-            let lastIndex = size() - 1
+            let lastIndex = size()
             queue.insert(newProcess, at: lastIndex)
         }
     }
@@ -55,6 +52,11 @@ class ProcessQueue {
         for process in queue {
             print("[ \(process.name) ]")
         }
+    }
+    
+    //Return the process queue object to caller
+    func getProcessQueue() -> [Process] {
+        return queue
     }
     
     //Method to check if queue is empty

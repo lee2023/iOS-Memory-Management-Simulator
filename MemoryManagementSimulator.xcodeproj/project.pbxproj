@@ -117,6 +117,7 @@
 				TargetAttributes = {
 					B25934D81DE26B4000E7F3AA = {
 						CreatedOnToolsVersion = 8.1;
+						DevelopmentTeam = S2W97NUM9L;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -288,6 +289,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = S2W97NUM9L;
 				INFOPLIST_FILE = MemoryManagementSimulator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.espinaldesigns.MemoryManagementSimulator;
@@ -301,6 +303,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = S2W97NUM9L;
 				INFOPLIST_FILE = MemoryManagementSimulator/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.espinaldesigns.MemoryManagementSimulator;

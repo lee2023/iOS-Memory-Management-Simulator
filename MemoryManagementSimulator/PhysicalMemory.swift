@@ -10,38 +10,42 @@ import Foundation
 import Darwin
 
 class PhysicalMemory {
-    var sizeOfMemory = 0
     var numberOfMemoryFrames: Int = 0
     var frameSize: Int = 0
     var physicalMemoryTable = [Int: Int]()
     var freeFrameList = [Int]()
     let defaultInitPageValue = -1
+    var numberOfEntries: Int = 0
     
     func setFrameSize(frameSize: Int) -> Int {
         self.frameSize = frameSize
         return self.frameSize
     }
     
-    func createPhysicalMemory(memSizeEntered: Int) -> Int {
-        let power = 2.0
-        self.sizeOfMemory = Int(pow(power, Double(memSizeEntered)))
-        return self.sizeOfMemory
-    }
+//    func createPhysicalMemory(memSizeEntered: Int) -> Int {
+//        let power = 2.0
+//        self.sizeOfMemory = Int(pow(power, Double(memSizeEntered)))
+//        return self.sizeOfMemory
+//    }
     
-    func divideMemIntoFrames(physicalMemSize: Int) {
+    func divideMemIntoFrames(physicalMemSize: Int) -> Int {
         if (self.frameSize == 0) {
             print("The frame size has not been set!")
         }
         numberOfMemoryFrames = physicalMemSize/frameSize
         if (numberOfMemoryFrames % 512 == 0) {
-            print("Memory has been successfully divided into frames of size\(self.frameSize)")
+            print("Memory has been successfully divided into frames of size: \(self.frameSize)")
         }
+        return numberOfMemoryFrames
     }
     
+    //Fix this method. The number of frames is wrong.
     func createPhysicalMemoryTable(numberOfFrames: Int) -> Dictionary<Int, Int> {
-        for i in 0...numberOfFrames {
+        for i in 0...numberOfFrames - 1 {
             physicalMemoryTable.updateValue(self.defaultInitPageValue, forKey: i)
         }
+        numberOfEntries = physicalMemoryTable.count
+        print("The number of entries in the table are: \(numberOfEntries)")
         return physicalMemoryTable
     }
     

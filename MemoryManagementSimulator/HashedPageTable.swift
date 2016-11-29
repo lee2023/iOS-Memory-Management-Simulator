@@ -40,11 +40,11 @@ class HashedPageTable {
         let bucket = hashFunction(pageNumber: pageNumber)
         var nodePointer = pageTable[bucket]
         
-        while (nodePointer?.nextNode! != nil) {
+        while (nodePointer?.nextNode != nil) {
             if(nodePointer?.getVirtualPageNumber() == pageNumber) {
                 return nodePointer!
             }
-            nodePointer = nodePointer?.nextNode!
+            nodePointer = nodePointer?.nextNode
         }
         return nodePointer!
     }

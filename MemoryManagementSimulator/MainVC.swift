@@ -141,18 +141,84 @@ class MainVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     
     @IBAction func simulateButtonPressed(_ sender: Any) {
-        //Code to run the actual simulation
         
-        var checkTextFields = areTextFieldsEmpty()
+        var numberOfProcesses: Int? = 0
+        var physicalMemSize: Int? = 0
+        
+        let checkTextFields = areTextFieldsEmpty()
         if (!checkTextFields) {
             //check for valid mem size entered and create number of processes, enter them in process queue
             
-            let memSizeValid = checkIfMemSizeValid()
+            //Get number of processes from text field
+            numberOfProcesses = Int(numOfProcessesTextField.text!)!
             
+            //Get the physical memory size from memSize text field
+            physicalMemSize = Int(memSizeTextField.text!)!
         }
         
         
+        //Create process objects and add them to the process queue
+        let processQueue = ProcessQueue()
+        if (numberOfProcesses! != 0) {
+            for count in 0...numberOfProcesses!-1 {
+                let newProcess = Process(_name: "P\(count)")
+                processQueue.addToQueue(newProcess: newProcess)
+            }
+            processQueue.printQueue()
+        }
 
+        //Get the page size from the pageSizeButton
+        let pageSize: Int = Int(pageSizeButton.title(for: UIControlState.normal)!)!
+        print("The selected page size is: \(pageSize)")
+        
+
+        if (checkIfMemSizeValid(memSize: physicalMemSize!)) {
+            print("Physical memory size entered is: \(physicalMemSize!)")
+        } else {
+            //Insert popup message to user letting them know they need to re-enter
+            print("The should be a UI popup notification!")
+        }
+        
+        //Create physical memory address space and table
+        let memory = PhysicalMemory()
+        let frameSize = memory.setFrameSize(frameSize: pageSize)
+        let numberOfFrames = memory.divideMemIntoFrames(physicalMemSize: physicalMemSize!)
+        
+        //Store newly created physical memory table
+        let physicalMemoryTable = memory.createPhysicalMemoryTable(numberOfFrames: numberOfFrames)
+        //memory.printPhysicalMemoryTable()
+        print("Number of frames in the physical memory table are: \(numberOfFrames)")
+        
+        //Create CPU and MMU objects, and get the process queue array
+        let cpu = CPU()
+        let mmu = MMU()
+        let queue = processQueue.getProcessQueue()
+        
+        for processObject in queue {
+            
+            //Have the CPU generate the virtual address space, page table
+            let processPageVirtualAddressAndPageTable = cpu.generateVirtualAddress(process: processObject, pageSize: pageSize)
+            let processVirtualAddress = processPageVirtualAddressAndPageTable.0
+            let processPageTable = processPageVirtualAddressAndPageTable.1
+            //processPageTable.printPageTable()
+            
+            //Have the MMU split the page virtual address
+            let pageAddressNoOffset = mmu.splitVirtualAddress(process: processObject)
+            
+            //Have MMU map an avaiblble memory frame to process page, then map virtual address to physical address
+            mmu.mapFrameToProcessPage(process: processObject, memory: memory, pageTable: processPageTable)
+            mmu.mapVirtualAddrToPhysicalAddr(process: processObject, pageTable: processPageTable, memory: memory)
+            
+            print("Process page table after MMU mapping:")
+            print(" ")
+            processPageTable.printPageTable()
+            
+            print(" ")
+            print("Physical memory table after MMU mapping:")
+            memory.printPhysicalMemoryTable()
+            
+            //processQueue.removeFromQueue()
+       }
         
         //Choose a process from the process queue
         
@@ -168,11 +234,9 @@ class MainVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     
     //Utility functions
-    func checkIfMemSizeValid() -> Bool {
+    func checkIfMemSizeValid(memSize: Int) -> Bool {
         //check to see that the physical mem size is divisible by page size
-        let physicalMemSize = Int(memSizeTextField.text!)
-        if (physicalMemSize! % 1024 == 0) {
-            print("The physical memory size entered is valid.")
+        if (memSize % 1024 == 0) {
             return true
         }
         return false

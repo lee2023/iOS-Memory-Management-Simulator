@@ -7,12 +7,14 @@
 //
 
 import Foundation
+import Darwin
 
 class MMU {
     let memory = PhysicalMemory()
     let offset = 1
+    var processVirtualAddressNoOffset: Int = 0
     
-    func mapVirtualAddrToPhysicalAddr(process: Process, pageTable: HashedPageTable) {
+    func mapVirtualAddrToPhysicalAddr(process: Process, pageTable: HashedPageTable, memory: PhysicalMemory) {
         //check to see that the frame was found for the process
         let pageTableCheck = isFrameInPageTable(process: process, pageTable: pageTable)
         if (pageTableCheck.0) {
@@ -25,7 +27,7 @@ class MMU {
     
     func splitVirtualAddress(process: Process) -> Int {
         let processVirtualAddress = process.getVirtualAddressWithOffset()
-        let processVirtualAddressNoOffset = processVirtualAddress - offset
+        processVirtualAddressNoOffset = processVirtualAddress - offset
         return processVirtualAddressNoOffset
     }
     
@@ -38,8 +40,16 @@ class MMU {
         }
         
         //generate a page fault
-        generatePageFault(process: process, processPageTable: pageTable, memory: self.memory)
+        generatePageFault(process: process, processPageTable: pageTable, memory: memory)
         return (false, -1, -1)
+    }
+    
+    func mapFrameToProcessPage(process: Process, memory: PhysicalMemory, pageTable: HashedPageTable) {
+        let freeFrames = memory.getFreeFrameList()
+        let frameSelectedToMap = arc4random_uniform(UInt32(freeFrames.count))
+        //let processPageVirtualAddress = splitVirtualAddress(process: process)
+        //pageTable.updatePageTable(processVirtualPageNumber: processVirtualAddressNoOffset, processMappedFrame: Int(frameSelectedToMap)) //this is a bug, there is a bug in hash table search function
+        pageTable.addToTable(processVirtualPageNumber: processVirtualAddressNoOffset, processMappedFrameNumber: Int(frameSelectedToMap))
     }
     
     func generatePageFault(process: Process, processPageTable: HashedPageTable, memory: PhysicalMemory) {

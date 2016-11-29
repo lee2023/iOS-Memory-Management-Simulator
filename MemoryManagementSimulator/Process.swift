@@ -12,12 +12,14 @@ import Darwin //allows me to use random number generator function
 class Process {
     var name: String = ""
     var pid = Int(arc4random_uniform(100) + 1)
-    var numberOfProcessPages: Int?
-    var virtualAddress: Int?
-    var virtualAddressSpaceSize: Int?
+    var numberOfProcessPages: Int = 0
+    var virtualAddress: Int = 0
+    var virtualAddressSpaceSize: Int = 0
     //randomly chosen offset value
     let virtualAddressOffset = 1
-   
+    let defaultInitPageKey = -1
+    let defaultInitFrameValue = -1
+
     
     //Process init function
     init(_name: String) {
@@ -32,7 +34,7 @@ class Process {
     
     //Check to see if randomly generated number of pages is 0
     func isNumberOfPagesforProcessZero() -> Bool {
-        if (self.numberOfProcessPages! == 0) {
+        if (self.numberOfProcessPages == 0) {
             //each process must have at least 1 page
             return true
         }
@@ -41,16 +43,14 @@ class Process {
     
     //Number of pages in virtual address space = virtualAddressSpace/pageSize
     func numberOfProcessPages(pageSize: Int) -> Int {
-        if (isNumberOfPagesforProcessZero()) {
-            print("Failed to determine the number of pages. Generated pages for the process was \(self.numberOfProcessPages).")
-            return self.numberOfProcessPages!
-        }
-        
         //check to see if the virtualAddressSpaceSize variable value has been set
-        if (virtualAddressSpaceSize != nil) {
-            numberOfProcessPages = Int(virtualAddressSpaceSize!)/pageSize
+        if (virtualAddressSpaceSize != 0) {
+            numberOfProcessPages = Int(virtualAddressSpaceSize)/pageSize
+            if (isNumberOfPagesforProcessZero()) {
+                numberOfProcessPages = 1
+            }
             print("Process virtual address space size is: \(virtualAddressSpaceSize) and number of pages is: \(numberOfProcessPages)")
-            return numberOfProcessPages!
+            return numberOfProcessPages
         }
         return 0
     }
@@ -60,43 +60,50 @@ class Process {
         let power = 2.0
         let addressSpace = Int(arc4random_uniform(25) + 1)
         let addressSpaceSize = pow(power, Double(addressSpace))
-        self.virtualAddressSpaceSize = Int(addressSpaceSize)
-        print("My address space is: \(addressSpace) and my address space size is: \(self.virtualAddressSpaceSize)")
-        return self.virtualAddressSpaceSize!
+        virtualAddressSpaceSize = Int(addressSpaceSize)
+        print("My address space is: \(addressSpace) and my address space size is: \(virtualAddressSpaceSize)")
+        return virtualAddressSpaceSize
     }
     
     
     //Process virtual address for page: VA = page# + offset
     func createPageVirtualAddress(pageNumber: Int) -> Int {
-        self.virtualAddress = pageNumber + virtualAddressOffset
+        virtualAddress = pageNumber + virtualAddressOffset
         print("Process page number is \(pageNumber) and the offset is \(virtualAddressOffset)")
-        return self.virtualAddress!
+        return virtualAddress //this is a bug that returns nil
     }
     
     //Returns virtual address with the offset
     func getVirtualAddressWithOffset() -> Int {
-        if (self.virtualAddress != nil) {
-            return self.virtualAddress!
+        if (self.virtualAddress != 0) {
+            return self.virtualAddress
         }
         return -1
     }
     
     //Random page access pattern
-    func randomizePageAccess(process: Process) -> Int {
+    func randomizePageAccess(numberOfProcessPages: Int) -> Int {
         var randomPageAccessed = 0
-        if numberOfProcessPages != nil {
-            randomPageAccessed = Int(arc4random_uniform(UInt32(numberOfProcessPages!) + 1))
+        if (numberOfProcessPages != 0) {
+            randomPageAccessed = Int(arc4random_uniform(UInt32(numberOfProcessPages) + 1))
             return randomPageAccessed
         }
         return -1
     }
     
     //Create a page table
-    func createProcessPageTable(newProcess: Process) -> HashedPageTable {
+    func createProcessPageTable(newProcess: Process, pageSize: Int) -> HashedPageTable {
         //Create a page table for a process passed into this func
         let table = HashedPageTable()
-        
+        let numberOfEntries = numberOfProcessPages(pageSize: pageSize)
+        for i in 0...numberOfEntries {
+            table.addToTable(processVirtualPageNumber: defaultInitPageKey, processMappedFrameNumber: defaultInitFrameValue)
+        }
         return table
+    }
+    
+    func printPageTable(pageTable: HashedPageTable) {
+        pageTable.printPageTable()
     }
 }
 
