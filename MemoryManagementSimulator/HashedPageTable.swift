@@ -55,13 +55,16 @@ class HashedPageTable {
         pageTable.updateValue(nodeToFind, forKey: processVirtualPageNumber)
     }
     
-    func printPageTable() {
+    func printPageTable() -> [Int: HashTableNode] {
         if pageTable.isEmpty {
             print("The page table is empty! No process address spaces have been added!")
         }
         
         for (key, value) in pageTable {
-            print("[ Page Number: \(key) : Frame Number: \(value.getMappedPageFrameNumber())]")
+            print("[ Page Number: \(key) : Frame Number: \(value.getMappedPageFrameNumber()) ]")
         }
+        var storedTable = pageTable
+        return storedTable
     }
+
 }

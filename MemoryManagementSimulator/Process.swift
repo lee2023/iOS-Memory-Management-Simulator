@@ -15,6 +15,8 @@ class Process {
     var numberOfProcessPages: Int = 0
     var virtualAddress: Int = 0
     var virtualAddressSpaceSize: Int = 0
+    var randomPageAccessed: Int = 0
+    var pageTable: [Int: HashTableNode]?
     //randomly chosen offset value
     let virtualAddressOffset = 1
     let defaultInitPageKey = -1
@@ -65,6 +67,11 @@ class Process {
         return virtualAddressSpaceSize
     }
     
+    //Returns virtual address space size
+    func getVirtualAddressSpaceSize() -> Int {
+        return self.virtualAddressSpaceSize
+    }
+    
     
     //Process virtual address for page: VA = page# + offset
     func createPageVirtualAddress(pageNumber: Int) -> Int {
@@ -83,12 +90,16 @@ class Process {
     
     //Random page access pattern
     func randomizePageAccess(numberOfProcessPages: Int) -> Int {
-        var randomPageAccessed = 0
         if (numberOfProcessPages != 0) {
-            randomPageAccessed = Int(arc4random_uniform(UInt32(numberOfProcessPages) + 1))
-            return randomPageAccessed
+            self.randomPageAccessed = Int(arc4random_uniform(UInt32(numberOfProcessPages) + 1))
+            return self.randomPageAccessed
         }
         return -1
+    }
+    
+    //Returns the number of pages access for a process
+    func getNumberOfPagesAccessed() -> Int {
+        return randomPageAccessed
     }
     
     //Create a page table

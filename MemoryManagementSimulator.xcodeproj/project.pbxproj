@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B22A8B5C1DEE389F00E26B28 /* ProcessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22A8B5B1DEE389F00E26B28 /* ProcessVC.swift */; };
 		B25934DD1DE26B4000E7F3AA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25934DC1DE26B4000E7F3AA /* AppDelegate.swift */; };
 		B25934DF1DE26B4000E7F3AA /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25934DE1DE26B4000E7F3AA /* MainVC.swift */; };
 		B25934E21DE26B4000E7F3AA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B25934E01DE26B4000E7F3AA /* Main.storyboard */; };
@@ -19,9 +20,11 @@
 		B25934F91DE6C2B200E7F3AA /* HashTableNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25934F81DE6C2B200E7F3AA /* HashTableNode.swift */; };
 		B25934FB1DEB6E6500E7F3AA /* CPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25934FA1DEB6E6500E7F3AA /* CPU.swift */; };
 		B25934FD1DEB73BF00E7F3AA /* PhysicalMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25934FC1DEB73BF00E7F3AA /* PhysicalMemory.swift */; };
+		B25935011DED3E2300E7F3AA /* DetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25935001DED3E2300E7F3AA /* DetailVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B22A8B5B1DEE389F00E26B28 /* ProcessVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessVC.swift; sourceTree = "<group>"; };
 		B25934D91DE26B4000E7F3AA /* MemoryManagementSimulator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MemoryManagementSimulator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B25934DC1DE26B4000E7F3AA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B25934DE1DE26B4000E7F3AA /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
@@ -36,6 +39,7 @@
 		B25934F81DE6C2B200E7F3AA /* HashTableNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HashTableNode.swift; sourceTree = "<group>"; };
 		B25934FA1DEB6E6500E7F3AA /* CPU.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPU.swift; sourceTree = "<group>"; };
 		B25934FC1DEB73BF00E7F3AA /* PhysicalMemory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhysicalMemory.swift; sourceTree = "<group>"; };
+		B25935001DED3E2300E7F3AA /* DetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +74,8 @@
 			children = (
 				B25934DC1DE26B4000E7F3AA /* AppDelegate.swift */,
 				B25934DE1DE26B4000E7F3AA /* MainVC.swift */,
+				B22A8B5B1DEE389F00E26B28 /* ProcessVC.swift */,
+				B25935001DED3E2300E7F3AA /* DetailVC.swift */,
 				B25934E01DE26B4000E7F3AA /* Main.storyboard */,
 				B25934E31DE26B4000E7F3AA /* Assets.xcassets */,
 				B25934E51DE26B4000E7F3AA /* LaunchScreen.storyboard */,
@@ -160,8 +166,10 @@
 			files = (
 				B25934DF1DE26B4000E7F3AA /* MainVC.swift in Sources */,
 				B25934F51DE3F23F00E7F3AA /* ProcessQueue.swift in Sources */,
+				B25935011DED3E2300E7F3AA /* DetailVC.swift in Sources */,
 				B25934EF1DE272AF00E7F3AA /* MMU.swift in Sources */,
 				B25934DD1DE26B4000E7F3AA /* AppDelegate.swift in Sources */,
+				B22A8B5C1DEE389F00E26B28 /* ProcessVC.swift in Sources */,
 				B25934FB1DEB6E6500E7F3AA /* CPU.swift in Sources */,
 				B25934F31DE3EF7700E7F3AA /* HashedPageTable.swift in Sources */,
 				B25934F91DE6C2B200E7F3AA /* HashTableNode.swift in Sources */,
@@ -332,6 +340,7 @@
 				B25934ED1DE26B4000E7F3AA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

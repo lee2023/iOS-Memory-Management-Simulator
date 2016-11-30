@@ -8,10 +8,12 @@
 
 import UIKit
 
-class MainVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+var globalProcessQueue = [Process]()
+
+class MainVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource {
 
     //Static arrays for UIPickerViews
-    let sysArchs = ["32", "64"]
+    let sysArchs = ["64"]
     let pageSizes = ["512", "1024", "2048", "4096", "8192"]
     let pageReplacementAlgorithms = ["FIFO"]
     
@@ -39,7 +41,7 @@ class MainVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     @IBOutlet weak var pageSizePicker: UIPickerView!
     @IBOutlet weak var algorithmPicker: UIPickerView!
     
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -211,14 +213,22 @@ class MainVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
             
             print("Process page table after MMU mapping:")
             print(" ")
-            processPageTable.printPageTable()
+            let storedProcessPageTable = processPageTable.printPageTable()
+            
+            //store the populated page table for the process
+            processObject.pageTable = storedProcessPageTable
             
             print(" ")
             print("Physical memory table after MMU mapping:")
             memory.printPhysicalMemoryTable()
             
             //processQueue.removeFromQueue()
-       }
+        }
+        
+        //sets global process queue variable to the populated process queue
+        globalProcessQueue.append(contentsOf: queue)
+    
+    
         
         //Choose a process from the process queue
         
@@ -232,6 +242,23 @@ class MainVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return globalProcessQueue.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let tableCell = UITableViewCell() //create a new cell
+        var count = 0
+        for process in globalProcessQueue {
+            if (count == indexPath.row) {
+                tableCell.textLabel!.text = process.name
+                break
+            }
+            count += 1
+        }
+        return tableCell
+    }
+
     
     //Utility functions
     func checkIfMemSizeValid(memSize: Int) -> Bool {
