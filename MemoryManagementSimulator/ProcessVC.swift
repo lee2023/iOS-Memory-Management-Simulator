@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProcessVC: UIViewController, UITableViewDelegate {
+class ProcessVC: UIViewController, UITableViewDelegate, UISplitViewControllerDelegate {
 
     @IBOutlet var processTableView: UITableView!
     var dataSource: MainVC?
@@ -22,7 +22,13 @@ class ProcessVC: UIViewController, UITableViewDelegate {
         dataSource = MainVC()
         self.processTableView.dataSource = dataSource
         self.processTableView.delegate = self
-        
+        self.splitViewController?.preferredDisplayMode = .allVisible
+        self.splitViewController?.delegate = self
+    }
+    
+    //Will show table view by default on any device that is not an iPad
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
+        return true
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

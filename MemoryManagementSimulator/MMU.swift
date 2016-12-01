@@ -22,6 +22,9 @@ class MMU {
             let physicalAddress = pageTableCheck.1 + offset
             let virtualAddress = pageTableCheck.2
             memory.insertPageIntoMemTable(frameNumber: physicalAddress, pageNumber: virtualAddress)
+            
+            //Add accessed page to fifo queue
+            //process.populatefifoQueue(process: process)
         }
     }
     
@@ -57,7 +60,16 @@ class MMU {
         cpu.handlePageFault(process: process, processPageTable: processPageTable, memory: memory)
     }
     
-    func fifoPageReplacementAlgorithm() {
-        //insert the code to do FIFO page replacement
-    }
 }
+
+
+
+
+
+
+
+
+
+
+
+

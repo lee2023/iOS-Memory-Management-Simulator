@@ -9,6 +9,7 @@
 import UIKit
 
 var globalProcessQueue = [Process]()
+var globalPhysicalMemTable: [Int:Int] = [:]
 
 class MainVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDataSource {
 
@@ -227,7 +228,12 @@ class MainVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UI
         
         //sets global process queue variable to the populated process queue
         globalProcessQueue.append(contentsOf: queue)
-    
+        
+        //sets global physical memory table with populated table
+        let memTable = memory.printPhysicalMemoryTable()
+        for (key , value) in memTable {
+            globalPhysicalMemTable.updateValue(value, forKey: key)
+        }
     
         
         //Choose a process from the process queue
@@ -256,6 +262,7 @@ class MainVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UI
             }
             count += 1
         }
+        
         return tableCell
     }
 

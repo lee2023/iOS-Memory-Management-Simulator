@@ -36,6 +36,10 @@ class CPU {
     //Handles page faults
     func handlePageFault(process: Process, processPageTable: HashedPageTable, memory: PhysicalMemory) {
         let freeFrames = memory.getFreeFrameList()
+        
+        //replace a process page in memory if there are no empty frames
+        
+        
         for index in freeFrames {
             if (freeFrames[index] == -1) {
                 //this is a free frame that can be used for the page

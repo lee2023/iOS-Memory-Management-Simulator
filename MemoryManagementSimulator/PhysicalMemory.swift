@@ -49,6 +49,7 @@ class PhysicalMemory {
         return physicalMemoryTable
     }
     
+    //Loads pages into memory
     func insertPageIntoMemTable(frameNumber: Int, pageNumber: Int) {
         physicalMemoryTable.updateValue(pageNumber, forKey: frameNumber)
     }
@@ -63,7 +64,7 @@ class PhysicalMemory {
         return freeFrameList
     }
     
-    func printPhysicalMemoryTable() {
+    func printPhysicalMemoryTable() -> [Int: Int] {
         if (physicalMemoryTable.isEmpty) {
             print("The physical memory table is empty.")
         }
@@ -71,5 +72,6 @@ class PhysicalMemory {
         for (key, value) in physicalMemoryTable {
             print("[ Frame Number: \(key) , Page Number: \(value) ]")
         }
+        return physicalMemoryTable
     }
 }

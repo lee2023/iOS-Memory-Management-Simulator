@@ -21,6 +21,7 @@ class Process {
     let virtualAddressOffset = 1
     let defaultInitPageKey = -1
     let defaultInitFrameValue = -1
+    var fifoQueue = [Int]()
 
     
     //Process init function
@@ -98,7 +99,7 @@ class Process {
     }
     
     //Returns the number of pages access for a process
-    func getNumberOfPagesAccessed() -> Int {
+    func getPagesAccessed() -> Int {
         return randomPageAccessed
     }
     
@@ -113,8 +114,41 @@ class Process {
         return table
     }
     
+    //Adds process pages loaded in memory to a fifo queue for page replacement
+    func populatefifoQueue(process: Process) -> [Int] {
+        let pageAccessed = process.getPagesAccessed()
+        if fifoQueue.isEmpty {
+            fifoQueue.insert(pageAccessed, at: 0)
+        } else {
+            //insert all pages that were loaded into memory
+            let fifoQueueSize = fifoQueue.count
+            for page in fifoQueue {
+                fifoQueue.insert(pageAccessed, at: fifoQueueSize)
+            }
+        }
+        return fifoQueue
+    }
+    
+    func fifoPageReplacementAlgorithm(pageToInsert: Int) -> Int {
+        
+        //remove the first page from the queue and from memory table
+        let pageRemoved = fifoQueue.removeFirst()
+        
+        
+        //insert new page at the end of the queue
+        fifoQueue.insert(pageToInsert, at: fifoQueue.count)
+        
+        return pageRemoved
+    }
+    
     func printPageTable(pageTable: HashedPageTable) {
         pageTable.printPageTable()
+    }
+    
+    //Returns physical memory table
+    func getPhysicalMemoryTable(memoryTable: PhysicalMemory) -> [Int: Int] {
+        let physicalMemory = memoryTable.printPhysicalMemoryTable()
+        return physicalMemory
     }
 }
 
