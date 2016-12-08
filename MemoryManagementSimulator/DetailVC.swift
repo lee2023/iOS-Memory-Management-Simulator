@@ -19,7 +19,7 @@ class DetailVC: UIViewController {
     @IBOutlet weak var numberOfPagesLabel: UILabel!
     @IBOutlet weak var numberOfPagesInMemLabel: UILabel!
     @IBOutlet weak var numberOfPageFaultsLabel: UILabel!
-    @IBOutlet weak var pageTabelTextView: UITextView!
+    @IBOutlet weak var pageTableEntry: UILabel!
     @IBOutlet weak var physicalMemoryTableTextView: UITextView!
     
     override func viewDidLoad() {
@@ -72,11 +72,14 @@ class DetailVC: UIViewController {
         
         let pageTable = process!.pageTable
         for (key, value) in pageTable! {
-            //only print out the non-empty entries of the page table
-            if (key != -1 && value.getMappedPageFrameNumber() != -1){
-                pageTabelTextView.insertText("[ Page Number: \(key) | Frame Number: \(value.getMappedPageFrameNumber()) ]\n")
-            }
+            pageTableEntry!.text = "[ Page Number: \(key) | Frame Number: \(value.getMappedPageFrameNumber()) ]\n"
         }
+//        for (key, value) in pageTable! {
+//            //only print out the non-empty entries of the page table
+//            if (key != -1 && value.getMappedPageFrameNumber() != -1){
+//                pageTabelTextView.insertText("[ Page Number: \(key) | Frame Number: \(value.getMappedPageFrameNumber()) ]\n")
+//            }
+//        }
         
         //this is correctly storing the memory table but the data is not see in the text view
         let memoryTable = globalPhysicalMemTable
