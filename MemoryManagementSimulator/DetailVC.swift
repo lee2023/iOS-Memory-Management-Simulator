@@ -72,7 +72,9 @@ class DetailVC: UIViewController {
         
         let pageTable = process!.pageTable
         for (key, value) in pageTable! {
-            pageTableEntry!.text = "[ Page Number: \(key) | Frame Number: \(value.getMappedPageFrameNumber()) ]\n"
+            if (key != -1 && value.getMappedPageFrameNumber() != -1) {
+                pageTableEntry!.text = "[ Page Number: \(key) | Frame Number: \(value.getMappedPageFrameNumber()) ]\n"
+            }
         }
 //        for (key, value) in pageTable! {
 //            //only print out the non-empty entries of the page table
@@ -85,7 +87,7 @@ class DetailVC: UIViewController {
         let memoryTable = globalPhysicalMemTable
         for (key, value) in memoryTable {
             //only print out the entries in the memory table
-            physicalMemoryTableTextView.insertText("[ Frame Number: \(key) | Page Number: \(value) ]\n")
+            physicalMemoryTableTextView.insertText("[  Frame Number: \(key) | Page Number: \(value)  ]\n")
         }
         
     }
