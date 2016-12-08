@@ -34,16 +34,17 @@ class MMU {
         return processVirtualAddressNoOffset
     }
     
-    //If the frame is found, return true, physical address, and split virtual address
+    //If the frame is found, return true (page table hit), physical address, and split virtual address
     func isFrameInPageTable(process: Process, pageTable: HashedPageTable) -> (Bool, Int, Int) {
         let virtualAddress = splitVirtualAddress(process: process)
         let frameNumber = pageTable.search(pageNumber: virtualAddress).getMappedPageFrameNumber()
         if (frameNumber != -1) {
             return (true, frameNumber, virtualAddress)
+        } else {
+            //generate a page fault
+            process.numberOfPageFaults += 1
+            generatePageFault(process: process, processPageTable: pageTable, memory: memory)
         }
-        
-        //generate a page fault
-        generatePageFault(process: process, processPageTable: pageTable, memory: memory)
         return (false, -1, -1)
     }
     

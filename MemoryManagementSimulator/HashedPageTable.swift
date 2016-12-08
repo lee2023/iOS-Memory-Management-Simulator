@@ -57,7 +57,7 @@ class HashedPageTable {
     
     func printPageTable() -> [Int: HashTableNode] {
         if pageTable.isEmpty {
-            print("The page table is empty! No process address spaces have been added!")
+            print("The page table is empty! No process address spaces page have been added!")
         }
         
         for (key, value) in pageTable {

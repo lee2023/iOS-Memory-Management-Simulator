@@ -16,7 +16,7 @@ class MainVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UI
     //Static arrays for UIPickerViews
     let sysArchs = ["64"]
     let pageSizes = ["512", "1024", "2048", "4096", "8192"]
-    let pageReplacementAlgorithms = ["FIFO"]
+    let pageReplacementAlgorithms = ["FIFO", "LRU", "NRU"]
     
     //IBOutlets for labels
     @IBOutlet weak var titleLabel: UILabel!

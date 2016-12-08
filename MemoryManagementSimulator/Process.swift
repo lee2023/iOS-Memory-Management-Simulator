@@ -22,6 +22,7 @@ class Process {
     let defaultInitPageKey = -1
     let defaultInitFrameValue = -1
     var fifoQueue = [Int]()
+    var numberOfPageFaults: Int = 0
 
     
     //Process init function

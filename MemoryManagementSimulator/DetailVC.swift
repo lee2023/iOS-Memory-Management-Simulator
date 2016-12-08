@@ -29,7 +29,40 @@ class DetailVC: UIViewController {
         pidLabel.text = String(processPid)
         
         let virtualAddressSpace = process!.getVirtualAddressSpaceSize()
-        virtualAddressLabel!.text = String(virtualAddressSpace)
+        
+        // Function to turn virtual address space size into an array of individual integers
+        func digitsInVirtualAddressSpaceSize(virtualAddressSpace: Int) -> [Int] {
+            var digitNum = virtualAddressSpace
+            var numOfDigits: [Int] = []
+            while digitNum > 0 {
+                numOfDigits.insert(digitNum % 10, at: 0)
+                digitNum /= 10
+            }
+            return numOfDigits
+        }
+        
+        // Parse the virtual address space size according to the number of digits the address space contains
+        let digits = digitsInVirtualAddressSpaceSize(virtualAddressSpace: virtualAddressSpace)
+        if (digits.count < 4){
+            //text label adds B for B
+            virtualAddressLabel!.text = String(virtualAddressSpace) + " Bytes"
+        }
+        else if (digits.count == 4) {
+            //insert decimal after first digit and add KiB
+            virtualAddressLabel!.text = String(digits[0]) + " KiB"
+        }
+        else if (digits.count == 5) {
+            virtualAddressLabel!.text = String(digits[0]) + String(digits[1]) + " KiB"
+        }
+        else if (digits.count == 6) {
+            virtualAddressLabel!.text = String(digits[0]) + String(digits[1]) + String(digits[2]) + " KiB"
+        }
+        else if (digits.count == 7) {
+            virtualAddressLabel!.text = String(digits[0]) + " MiB"
+        }
+        else if (digits.count == 8) {
+            virtualAddressLabel!.text = String(digits[0]) + String(digits[1]) + " MiB"
+        }
         
         let numOfPages = process!.numberOfProcessPages
         numberOfPagesLabel.text = String(numOfPages)
