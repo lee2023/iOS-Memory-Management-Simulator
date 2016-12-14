@@ -223,7 +223,6 @@ class MainVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UI
             print("Physical memory table after MMU mapping:")
             memory.printPhysicalMemoryTable()
             
-            //processQueue.removeFromQueue()
         }
         
         //sets global process queue variable to the populated process queue
@@ -270,7 +269,7 @@ class MainVC: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate, UI
     //Utility functions
     func checkIfMemSizeValid(memSize: Int) -> Bool {
         //check to see that the physical mem size is divisible by page size
-        if (memSize % 1024 == 0) {
+        if (memSize % 512 == 0) {
             return true
         }
         return false

@@ -64,7 +64,8 @@ class PhysicalMemory {
         return freeFrameList
     }
     
-    func printPhysicalMemoryTable() -> [Int: Int] {
+    //changing return from [Int: Int] to Dictionary<Int, Int>
+    func printPhysicalMemoryTable() -> Dictionary<Int, Int> {
         if (physicalMemoryTable.isEmpty) {
             print("The physical memory table is empty.")
         }

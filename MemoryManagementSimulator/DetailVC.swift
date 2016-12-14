@@ -82,8 +82,7 @@ class DetailVC: UIViewController {
 //                pageTabelTextView.insertText("[ Page Number: \(key) | Frame Number: \(value.getMappedPageFrameNumber()) ]\n")
 //            }
 //        }
-        
-        //this is correctly storing the memory table but the data is not see in the text view
+
         let memoryTable = globalPhysicalMemTable
         for (key, value) in memoryTable {
             //only print out the entries in the memory table
