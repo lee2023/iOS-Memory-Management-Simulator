@@ -2,7 +2,7 @@
 //  DetailVC.swift
 //  MemoryManagementSimulator
 //
-//  Created by Rosemary Espinal on 11/28/16.
+//  Created by Leo Espinal on 11/28/16.
 //  Copyright © 2016 Espinal Designs, LLC. All rights reserved.
 //
 

@@ -2,7 +2,7 @@
 //  MMU.swift
 //  MemoryManagementSimulator
 //
-//  Created by Rosemary Espinal on 11/20/16.
+//  Created by Leo Espinal on 11/20/16.
 //  Copyright © 2016 Espinal Designs, LLC. All rights reserved.
 //
 
